@@ -74,7 +74,15 @@ function Interview({ params }) {
 
 
         </div>
-        <div className='flex justify-end items-end'><Button>Start interview</Button></div>
+        <div className='flex justify-end items-end'>
+          <Button
+            onClick={() => {
+              window.location.href = `/dashboard/interview/${params.interviewId}/start`;
+            }}
+          >
+            Start mock interview
+          </Button>
+        </div>
 
       </div>
 

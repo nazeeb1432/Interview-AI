@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation';
 import {
     Dialog,
     DialogContent,
@@ -59,7 +60,7 @@ function AddNewInterview() {
                 console.log("Inserted ID:", resp);
                 if(resp){
                     setOpenDialog(false);
-                    router.push('/dashboard/interview'+resp[0]?.mockId)
+                    router.push('/dashboard/interview/'+resp[0]?.mockId)
                 }
 
             } else {
@@ -113,7 +114,7 @@ function AddNewInterview() {
                                     <Button type="submit" disabled={loading}>
                                         {loading ?
                                             <><LoaderCircle className='animate-spin' /> 'Generating...'</>
-                                            : 'Start Interview'}
+                                            : 'Start the Interview'}
                                     </Button>
                                 </div>
                             </form>
