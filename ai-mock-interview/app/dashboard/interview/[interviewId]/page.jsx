@@ -27,69 +27,74 @@ function Interview({ params }) {
   }
 
   return (
-    <div className='my-10 flex justify-center flex-col items-center'>
-      <h2 className='font-bold text-2xl'>Let's get started</h2>
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
-
-
-        {/*info section */}
-        <div className='flex flex-col my-5'>
-          <h2 className='text-lg' >
-            <strong>Job Role/Job Position:</strong>{" "}
-            {interviewData ? interviewData.jobPosition : "Loading..."}
-          </h2>
-
-          <h2 className='text-lg' >
-            <strong>Job Description:</strong>{" "}
-            {interviewData ? interviewData.jobDesc : "Loading..."}
-          </h2>
-          <h2 className='text-lg' >
-            <strong>Years of Experience:</strong>{" "}
-            {interviewData ? interviewData.jobExperience : "Loading..."} years
-          </h2>
+    <div className="min-h-screen flex flex-col items-center justify-center py-10 px-4">
+      <div className="w-full max-w-4xl">
+        <div className="mb-8 text-center">
+          <h2 className="font-extrabold text-4xl text-yellow-700 mb-2 drop-shadow">Let's get started</h2>
+          <p className="text-lg text-black font-medium">Prepare for your mock interview with all the details below.</p>
         </div>
-
-        <div className='p-5 border rounded-lg border-yellow-300 bg-amber-200'>
-        
-          <h2 className='flex gap-2 items-center text-yellow-600'>  <Lightbulb /><strong>Information: </strong></h2>
-          <h2>{process.env.NEXT_PUBLIC_INFORMATION}</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Info Card */}
+          <div className="bg-transparent backdrop-blur-sm rounded-xl shadow-lg p-6 flex flex-col gap-4 border border-blue-200">
+            <strong><h3 className="text-xl font-bold text-yellow-700 mb-2">Interview Details</h3></strong>
+            <div className="space-y-2">
+              <div>
+                <span className="font-bold text-black">Job Role/Position:</span>{" "}
+                <span className="text-black">{interviewData ? interviewData.jobPosition : "Loading..."}</span>
+              </div>
+              <div>
+                <span className="font-bold text-black">Job Description:</span>{" "}
+                <span className="text-black">{interviewData ? interviewData.jobDesc : "Loading..."}</span>
+              </div>
+              <div>
+                <span className="font-bold text-black">Years of Experience:</span>{" "}
+                <span className="text-black">{interviewData ? interviewData.jobExperience : "Loading..."} years</span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Camera Card */}
+          <div className="bg-transparent backdrop-blur-sm rounded-xl shadow-lg p-6 border border-blue-200 flex flex-col items-center justify-center">
+            <h3 className="text-lg font-bold text-yellow-700 mb-4">Webcam & Microphone</h3>
+            {webcamEnabled ? (
+              <Webcam
+                onUserMedia={() => setWebcamEnabled(true)}
+                onUserMediaError={() => setWebcamEnabled(false)}
+                mirrored={true}
+                style={{ height: 300, width: 300, borderRadius: 16, border: '2px solid #FBBF24' }}
+              />
+            ) : (
+              <>
+                <WebcamIcon className="h-48 w-48 my-4 p-6 bg-blue-50 rounded-xl border border-blue-200 transition hover:scale-105" />
+                <Button className="mt-2 bg-blue-700 hover:bg-blue-900 text-white font-bold px-4 py-2 rounded-lg shadow" onClick={() => setWebcamEnabled(true)}>
+                  Enable webcam and microphone
+                </Button>
+              </>
+            )}
+            
+            {/* Information section moved inside camera card */}
+          <div className="mt-4 bg-amber-100 rounded-lg shadow p-2 border border-yellow-300 flex flex-col gap-2 w-3/4 max-w-xs">
+              <h3 className="flex gap-2 items-center text-yellow-700 text-base font-semibold">
+                <Lightbulb /> Information
+              </h3>
+              <p className="text-gray-700 text-xs">{process.env.NEXT_PUBLIC_INFORMATION}</p>
+            </div>
+          </div>
         </div>
-        {/*Camera section */}
-        <div>
-          {webcamEnabled ? <Webcam
-            onUserMedia={() => setWebcamEnabled(true)}
-            onUserMediaError={() => setWebcamEnabled(false)}
-            mirrored={true}
-            style={{
-              height: 300,
-              width: 300
-            }}
-          /> :
-            <>
-              <WebcamIcon className='h-72 w-full my-7 p-20 bg-secondary rounded-lg border' />
-              <Button onClick={() => setWebcamEnabled(true)}>Enable webcam and microphone</Button>
-            </>
-
-          }
-
-
+       <div className="flex justify-center mt-8">
+          {/* Start Interview Button */}
+          <div className="flex flex-col items-center justify-center">
+            <Button
+              className="bg-blue-700 hover:bg-blue-900 text-white font-bold px-6 py-3 rounded-xl shadow-lg text-lg transition-all duration-200"
+              onClick={() => {
+                window.location.href = `/dashboard/interview/${params.interviewId}/start`;
+              }}
+            >
+              Start mock interview
+            </Button>
+          </div>
         </div>
-        <div className='flex justify-end items-end'>
-          <Button
-            onClick={() => {
-              window.location.href = `/dashboard/interview/${params.interviewId}/start`;
-            }}
-          >
-            Start mock interview
-          </Button>
-        </div>
-
       </div>
-
-
-
-
-
     </div>
   )
 }

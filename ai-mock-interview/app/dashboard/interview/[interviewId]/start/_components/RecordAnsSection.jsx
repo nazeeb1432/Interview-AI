@@ -98,27 +98,40 @@ function RecordAnsSection({mockInterviewQuestions,activeQuestionIndex,interviewD
 
   return (
     <div>
-    <div className='flex flex-col my-20 justify-center items-center bg-white rounded-lg p-5'>
-      <Image src={'/webcam.avif'} width={200} height={200} className='absolute' alt="Webcam"/>
+    <div className='flex flex-col justify-center items-center bg-transparent rounded-lg p-0 m-0'>
+      <Image src={'/webcam.avif'} width={450} height={270} className='absolute' alt="Webcam"/>
       <Webcam
       mirrored={true}
       style={{
-        height:200,
-        width: '50%',
-        zIndex:10
+        height: 400,
+        width: '90%',
+        zIndex: 10,
+        padding: '0',
+        margin: '0',
+        borderRadius: '8px',
       }}
-      /> 
+      />
+      
+      <Button 
+        disabled={loading} 
+        variant={isRecording ? "destructive" : "default"}
+        className="mt-4 px-6 py-1 shadow-md"
+        onClick={StartStopRecording}
+      >
+        {isRecording ? (
+          <div className="flex items-center gap-2">
+            <Mic className="animate-pulse" />
+            <span className='text-white'>Recording...</span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Mic />
+            <span>Record Answer</span>
+          </div>
+        )}
+      </Button>
+ 
     </div>
-<Button disabled={loading} variant="outline" className="my-10"
-onClick={StartStopRecording}>
-    {isRecording ?
-        <h2 className='text-red-600'>
-            <Mic /> Recording...
-        </h2>
-        :
-        'Record Answer'
-    }
-</Button>
 
 
 

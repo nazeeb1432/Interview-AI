@@ -13,9 +13,19 @@ function StartInterview({params}) {
   const [mockInterviewQuestions, setMockInterviewQuestions] = useState(); 
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
   useEffect(()=>{
-
-GetInterviewDetails();
-
+    GetInterviewDetails();
+    
+    // Add event listener for question selection
+    const handleQuestionChange = (event) => {
+      setActiveQuestionIndex(event.detail);
+    };
+    
+    window.addEventListener('changeQuestion', handleQuestionChange);
+    
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener('changeQuestion', handleQuestionChange);
+    };
     },[]);
 
      /**
@@ -36,11 +46,14 @@ GetInterviewDetails();
   
     return (
     <div>
-      <div className='grid grid-cols-1 md:grid-cols-2'>
+      <div className='grid grid-cols-1 md:grid-cols-2 bg-transparent my-2'>
         {/*question*/}
 
-          <QuestionsSection mockInterviewQuestions={mockInterviewQuestions}
-          activeQuestionIndex={activeQuestionIndex}/>
+          <QuestionsSection 
+            mockInterviewQuestions={mockInterviewQuestions}
+            activeQuestionIndex={activeQuestionIndex}
+            onQuestionClick={setActiveQuestionIndex}
+          />
 
         {/*video/audio recording*/}
         <RecordAnsSection
@@ -49,7 +62,7 @@ GetInterviewDetails();
          interviewData={interviewData}
         />
       </div>
-      <div className='flex justify-end gap-6'>
+      <div className='flex justify-end gap-10'>
         {activeQuestionIndex>0 && 
         <Button onClick={()=>setActiveQuestionIndex(activeQuestionIndex-1)}>Previous Question</Button>}
         {activeQuestionIndex!= mockInterviewQuestions?.length-1 && 

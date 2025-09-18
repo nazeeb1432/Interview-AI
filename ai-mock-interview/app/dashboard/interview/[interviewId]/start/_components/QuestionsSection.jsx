@@ -2,7 +2,7 @@ import { Lightbulb, Volume2 } from 'lucide-react';
 import React, { useState, useEffect } from 'react'
 
 
-function QuestionsSection({ mockInterviewQuestions, activeQuestionIndex = 0 }) {
+function QuestionsSection({ mockInterviewQuestions, activeQuestionIndex = 0, onQuestionClick }) {
   const [questions, setQuestions] = useState([]);
   const [isClient, setIsClient] = useState(false);
 
@@ -42,16 +42,17 @@ function QuestionsSection({ mockInterviewQuestions, activeQuestionIndex = 0 }) {
   }
 
   return (
-    <div className='p-5 border rounded-lg'>
+    <div className='p-5  bg-transparent'>
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 '>
             {questions.map((question, index) => (
                 <div key={index}>
                     <h2
                         className={`p-2 rounded-full text-xs md:text-sm text-center cursor-pointer ${
                             activeQuestionIndex === index
-                                ? 'bg-primary text-white'
-                                : 'bg-secondary'
+                                ? 'bg-blue-500 text-white'
+                                : 'bg-blue-700 text-white'
                         }`}
+                        onClick={() => onQuestionClick ? onQuestionClick(index) : window.dispatchEvent(new CustomEvent('changeQuestion', { detail: index }))}
                     >
                         Question {index + 1}
                     </h2>
@@ -60,8 +61,11 @@ function QuestionsSection({ mockInterviewQuestions, activeQuestionIndex = 0 }) {
                 
             ))}
         </div>
-         <p className='my-5 text-md md:text-lg'>{questions[activeQuestionIndex]?.question}</p>
-<Volume2 className='cursor-pointer' onClick={()=>textToSpeech(questions[activeQuestionIndex]?.question)}/>
+        
+         <p className='my-5 text-md md:text-lg bg-white p-5 font-bold'>
+          <Volume2 className='cursor-pointer' onClick={()=>textToSpeech(questions[activeQuestionIndex]?.question)}/>
+          {questions[activeQuestionIndex]?.question}</p>
+
    
    <div className='border rounded-lg p-5 bg-blue-100'>
     <h2 className='flex gap-2 items-center text-primary'>
