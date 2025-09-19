@@ -36,7 +36,7 @@ function AddNewInterview() {
         e.preventDefault();
         console.log(jobPosition, jobDesc, jobExperience);
 
-        const InputPrompt = "Job Position: " + jobPosition + ", Job Description: " + jobDesc + ", Years of Experience: " + jobExperience + ", Depending on Job Position,Job Description and Years of Experience, Give us " + process.env.NEXT_PUBLIC_INTERVIEW_QUESTION_LIMIT + " Interview questions along with answers in JSON format.Give us question and answer field on JSON";
+        const InputPrompt = "Job Position: " + jobPosition + ", Job Description: " + jobDesc + ", Years of Experience: " + jobExperience + ", Depending on Job Position,Job Description and Years of Experience, Give us " + process.env.NEXT_PUBLIC_INTERVIEW_QUESTION_LIMIT + " Interview questions from TOP tech companies like meta, amazon along with answers in JSON format.Give us question and answer field on JSON";
         console.log(InputPrompt);
 
         try {
